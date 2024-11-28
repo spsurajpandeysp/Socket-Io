@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatt App</title>
+</head>
+<body>
+    <h1>Web Socket</h1>
+
+    <input placeholder="Enter Message" type="text" name="msg" id="message"/>
+    <button id="send-msg">Send Message</button>
+
+    <div id="display-message">
+
+    </div>
+    
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io()
+        const messageInput = document.getElementById('message');
+        const sendMessage = document.getElementById('send-msg')
+        sendMessage.addEventListener('click',e=>{
+            socket.emit('user-message',messageInput.value)
+        })
+
+        const msgCont = document.getElementById('display-message');
+        
+
+        socket.on("message",(message)=>{
+            console.log("Hwoer",message)
+            const pTag = document.createElement('p');
+            pTag.innerText = message;
+            msgCont.appendChild(pTag);
+        })
+
+    </script>
+ 
+</body>
+</html>
